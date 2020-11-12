@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>学生信息管理系统 - 个人成绩</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center bg-light" style="height:500px">
+        <div class="align-self-center" style="text-align:center;">
+            <h2>成绩</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>课程名</th>
+                    <th>教师</th>
+                    <th>成绩</th>
+                    <th>学年</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in ScoreTable %}
+                <tr>
+                    <td>{{item['course']}}</td>
+                    <td>{{item['Tnum']}}</td>
+                    <td>{{item['score']}}</td>
+                    <td>{{item['grade']}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="/" role="button" class="btn btn-primary">返回首页</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

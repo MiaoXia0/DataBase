@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>学生信息管理系统 - 修改个人信息</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center bg-light" style="height:700px">
+        <div class="align-self-center" style="text-align:center;">
+            <b><h2>修改个人信息</h2></b>
+            <form action="/alterself" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">账号</span>
+                    </div>
+                    <input class="form-control" type="text" value="{{username}}" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">账号类型</span>
+                    </div>
+                    <input class="form-control" type="text"
+                           value="{% if type == 'student' %}学生{% else %}教师{% endif %}" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{% if type == 'student' %}学号{% else %}编号{% endif %}</span>
+                    </div>
+                    <input class="form-control" type="text" value="{{num}}" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">密码</span>
+                    </div>
+                    <input class="form-control" placeholder="新密码" name="pswnew" type="password">
+                    <font style="color:grey">(不修改请留空)</font>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">姓名</span>
+                    </div>
+                    <input class="form-control" placeholder="姓名" name="name" value="{{name}}">
+                </div>
+                {% if sex == 'Male' %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">性别</div>
+                    </div>
+                    <select class="form-control" name="sex">
+                        <option value="Male">男</option>
+                        <option value="Female">女</option>
+                    </select>
+                </div>
+                {% elif sex == 'Female' %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">性别</div>
+                    </div>
+                    <select class="form-control" name="sex">
+                        <option value="Female">女</option>
+                        <option value="Male">男</option>
+                    </select>
+                </div>
+                {% endif %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">年龄</span>
+                    </div>
+                    <input class="form-control" placeholder="年龄" name="age" value="{{age}}">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">系</span>
+                    </div>
+                    <input class="form-control" placeholder="系" name="dept" value="{{dept}}">
+                </div>
+                {% if type == 'student' %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">年级</span>
+                    </div>
+                    <input class="form-control" placeholder="年级" class="stu" name="grade" value="{{grade}}">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">班级</span>
+                    </div>
+                    <input class="form-control" placeholder="班级" name="class" value="{{classs}}">
+                </div>
+                {% endif %}
+                <input type="hidden" name="username" value="{{username}}"><br/>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="submit">修改</button>
+                    <a href="/" role="button" class="btn btn-primary">返回首页</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

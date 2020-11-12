@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>学生信息管理系统 - 个人信息</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center bg-light" style="height:500px">
+        <div class="align-self-center" style="text-align:center;">
+            <h2>个人信息</h2><br />
+            <table class="table table-hover">
+                {% if typ == 'student' %}
+                <thead>
+                <tr>
+                    <th>账号</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>系</th>
+                    <th>年级</th>
+                    <th>班级</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{StatusTable[0]['account']}}</td>
+                    <td>{{StatusTable[0]['Num']}}</td>
+                    <td>{{StatusTable[0]['Name']}}</td>
+                    <td>{% if StatusTable[0]['sex'] == 'Male' %}男{% elif StatusTable[0]['sex'] == 'Female' %}女{% endif
+                        %}
+                    </td>
+                    <td>{{StatusTable[0]['Age']}}</td>
+                    <td>{{StatusTable[0]['Dept']}}</td>
+                    <td>{{StatusTable[0]['Grade']}}</td>
+                    <td>{{StatusTable[0]['Class']}}</td>
+                </tr>
+                </tbody>
+                {% elif typ == 'teacher' %}
+                <thead>
+                <tr>
+                    <th>账号</th>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>系</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{StatusTable[0]['account']}}</td>
+                    <td>{{StatusTable[0]['num']}}</td>
+                    <td>{{StatusTable[0]['name']}}</td>
+                    <td>
+                        {% if StatusTable[0]['sex'] == 'Male' %}
+                            男
+                        {% elif StatusTable[0]['sex'] == 'Female' %}
+                            女
+                        {% endif %}
+                    </td>
+                    <td>{{StatusTable[0]['age']}}</td>
+                    <td>{{StatusTable[0]['dept']}}</td>
+                </tr>
+                </tbody>
+                {% endif %}
+            </table>
+            <a href="/" role="button" class="btn btn-primary">返回首页</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>学生信息管理系统 - 确认删除</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center bg-light" style="height:700px">
+        <div class="align-self-center" style="text-align:center;">
+            <h2>成绩删除</h2><br/>
+            <h3>信息</h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>账号</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>系</th>
+                    <th>年级</th>
+                    <th>班级</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{username}}</td>
+                    <td>{{num}}</td>
+                    <td>{{name}}</td>
+                    <td>
+                        {% if sex == 'Male' %}
+                        男
+                        {% elif sex == 'Female' %}
+                        女
+                        {% endif %}
+                    </td>
+                    <td>{{age}}</td>
+                    <td>{{dept}}</td>
+                    <td>{{grade}}</td>
+                    <td>{{classs}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h3>成绩</h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>课程名</th>
+                    <th>教师</th>
+                    <th>成绩</th>
+                    <th>学年</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in scores %}
+                <tr>
+                    <td>{{item['course']}}</td>
+                    <td>{{item['Tnum']}}</td>
+                    <td>{{item['score']}}</td>
+                    <td>{{item['grade']}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <form action="/deleteone" method="post">
+                <select class="form-control" name="Cname">
+                    {% for item in scores %}
+                    <option value="{{item['course']}}">{{item['course']}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="num" value="{{num}}">
+                <button class="btn btn-primary" type="submit">删除选中</button>
+            </form>
+            <form action="/delete" method="post">
+                <input type="hidden" name="num" value="{{num}}">
+                <div class="btn-group-vertical">
+                    <button class="btn btn-primary" type="submit">删除全部</button>
+                    <a href="/" role="button" class="btn btn-primary">返回首页</a>
+                </div>
+            </form>
+            {{succeed}}
+        </div>
+    </div>
+</div>
+</body>
+</html>

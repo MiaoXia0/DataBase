@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>学生信息管理系统 - 录入成绩</title>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center bg-light" style="height:500px">
+        <div class="align-self-center" style="text-align:center;">
+            <h2>成绩录入</h2>
+            <form action="add" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">教师编号</div>
+                    </div>
+                    <input class="form-control" type="text" name="Tnum" value="{{Tnum}}" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">学号</div>
+                    </div>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">stu</div>
+                    </div>
+                    <input class="form-control" type="text" name="Snum">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">课程名</div>
+                    </div>
+                    <input type="text" name="Cname">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">成绩</div>
+                    </div>
+                    <input type="text" name="score">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">学年</div>
+                    </div>
+                    <input type="text" name="grade">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="submit">录入</button>
+                    <a href="/" role="button" class="btn btn-primary">返回首页</a>
+                </div>
+            </form>
+            {{message}}
+        </div>
+    </div>
+</div>
+</body>
+</html>

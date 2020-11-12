@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息管理系统 - 注册</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#sel").change(function(){
+            var selected = $("#sel").find("option:selected").val();
+            if(selected == "student"){
+                $(".stu").show();
+                $(".tch").hide();
+            }else if(selected == "teacher"){
+                $(".tch").show();
+                $(".stu").hide();
+            }
+        })
+    });
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center bg-light" style="height:700px">
+        <div class="align-self-center" style="text-align:center;">
+            <b><h2>账号注册</h2></b>
+            <form action="/register" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">用户名</div>
+                    </div>
+                    <input class="form-control" placeholder="用户名" name="username">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">密码</div>
+                    </div>
+                    <input class="form-control" placeholder="密码" name="password" type="password">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">账户类型</div>
+                    </div>
+                    <select id="sel" class="form-control" name="type">
+                        <option value="student">学生</option>
+                        <option value="teacher">教师</option>
+                    </select>
+                </div>
+                <div class="stu input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">学号</div>
+                    </div>
+                    <input class="form-control" value="stu{{numstu}}" readonly>
+                </div>
+                <div class="tch input-group mb-3" style="display:none">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">编号</div>
+                    </div>
+                    <input class="form-control" value="tch{{numtch}}" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">姓名</div>
+                    </div>
+                    <input class="form-control" placeholder="姓名" name="name">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">性别</div>
+                    </div>
+                    <select class="form-control" name="sex">
+                        <option value="Male">男</option>
+                        <option value="Female">女</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">年龄</div>
+                    </div>
+                    <input class="form-control" placeholder="年龄" name="age">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">系</div>
+                    </div>
+                    <input class="form-control" placeholder="系" name="dept">
+                </div>
+                <div class="stu">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">年级</div>
+                        </div>
+                        <input class="form-control" class="stu" placeholder="年级" name="grade">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">班级</div>
+                        </div>
+                        <input class="form-control" class="stu" placeholder="班级" name="class">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="submit">注册</button>
+                    <a href="/" role="button" class="btn btn-primary">返回首页</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
