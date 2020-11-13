@@ -15,9 +15,13 @@
             if(selected == "student"){
                 $(".stu").show();
                 $(".tch").hide();
+                $("#class").addClass('required')
+                $("#grade").addClass('required')
             }else if(selected == "teacher"){
                 $(".tch").show();
                 $(".stu").hide();
+                $("#class").removeClass('required')
+                $("#grade").removeClass('required')
             }
         })
     });
@@ -96,14 +100,14 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">年级</div>
                         </div>
-                        <input class="form-control" type="number" value="1" class="stu" placeholder="年级" name="grade"
+                        <input id="grade" class="form-control stu" type="number" value="1" placeholder="年级" name="grade"
                                oninput="if(value<1)value=1;if(value>4)value=4" required>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">班级</div>
                         </div>
-                        <input class="form-control" type="number" class="stu" placeholder="班级"
+                        <input  id="class" class="form-control stu" type="number" placeholder="班级"
                                oninput="if(value<1)value=1" name="class" required>
                     </div>
                 </div>
