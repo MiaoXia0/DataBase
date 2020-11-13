@@ -142,7 +142,11 @@ def statusSelectP():
         if user.isExistStu(num):
             StatusTable = SQL.select('select * from students where Num = \'%s\'' % num)
             ScoreTable = SQL.select('select * from score where Snum = \'%s\'' % num)
-            return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable)
+            Sum = 0.0
+            for item in ScoreTable:
+                Sum += item['score']
+            avg = Sum / len(ScoreTable)
+            return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avg=avg)
         else:
             return render_template('statusSelect.html', fail='找不到学生')
 
@@ -237,7 +241,6 @@ def deletenump():
             return render_template('deletenum.html', fail='找不到用户')
 
 
-
 @app.route('/delete', methods=['POST'])
 @login_required
 def delete():
@@ -287,7 +290,11 @@ def score():
         where account='%s'
     )
     ''' % current_user.id)
-    return render_template('score.html', ScoreTable=st)
+    Sum = 0.0
+    for item in st:
+        Sum += item['score']
+    avg = Sum / len(st)
+    return render_template('score.html', ScoreTable=st, avg=avg)
 
 
 @app.route('/test', methods=['GET'])

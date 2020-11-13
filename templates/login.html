@@ -8,19 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body class="text-center">
-<form class="form-signin" method="post">
-    <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
-    <label for="inputUsername" class="sr-only">用户名</label>
-    <input type="text" name="username" id="inputUsername" class="form-control" placeholder="用户名" required autofocus>
-    <label for="inputPassword" class="sr-only">密码</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required>
-    <input name="next" type="hidden" value="{{next}}">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-    <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
-    {{fail}}
-    {{get_flashed_messages()[0]}}
-</form>
-
+<div class="container">
+    <form class="form-signin" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+        <label for="inputUsername" class="sr-only">用户名</label>
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="用户名" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <input name="next" type="hidden" value="{{next}}">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
+        {{fail}}
+        {{get_flashed_messages()[0]}}
+    </form>
+</div>
 <br/>
 </body>
 </html>
