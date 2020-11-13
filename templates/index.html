@@ -9,13 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>学生信息管理系统 - 主页</title>
 </head>
-<body>
+<body class="text-center">
 <div class="container">
     <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
             <h2>学生信息管理系统</h2>
             {% if login == 1 %}
-
             <a href="status" role="button" class="btn btn-lg btn-primary btn-block">个人信息</a>
             {% if type == 'student' %}
             <a href="alterself" role="button" class="btn btn-lg btn-primary btn-block">修改信息</a>
@@ -38,8 +37,6 @@
             <a href="/login" role="button" class="btn btn-lg btn-primary btn-block">登录</a>
             <a href="/register" role="button" class="btn btn-lg btn-primary btn-block">注册</a>
             {% endif %}
-
-
         </div>
     </div>
 </div>
