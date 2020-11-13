@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/body.css">
     <script src="/static/js/jquery-3.5.1.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="row justify-content-center bg-light" style="height:500px">
+    <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
             <h2>成绩录入</h2>
             <form action="add" method="post">
@@ -27,30 +28,30 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">stu</div>
                     </div>
-                    <input class="form-control" type="text" name="Snum">
+                    <input class="form-control" type="text" name="Snum" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">课程名</div>
                     </div>
-                    <input type="text" name="Cname">
+                    <input type="text" name="Cname" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">成绩</div>
                     </div>
-                    <input type="text" name="score">
+                    <input type="text" name="score" type="number" oninput="if(value<0)value=0;if(value>100)value=100"
+                           required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">学年</div>
                     </div>
-                    <input type="text" name="grade">
+                    <input type="text" name="grade" type="number" oninput="if(value>4)value=4;if(value<1)value=1"
+                           required>
                 </div>
-                <div class="btn-group">
-                    <button class="btn btn-primary" type="submit">录入</button>
-                    <a href="/" role="button" class="btn btn-primary">返回首页</a>
-                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">录入</button>
+                <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
             </form>
             {{message}}
         </div>

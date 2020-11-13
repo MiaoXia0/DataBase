@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/body.css">
     <script src="/static/js/jquery-3.5.1.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,15 +11,13 @@
 </head>
 <body>
 <div class="container">
-    <div class="row justify-content-center bg-light" style="height:500px">
+    <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
             <h2>信息修改</h2><br/>
             <form action="alter" method="post">
                 <input type="text" class="form-control" placeholder="学号或教师编号" name="num"><br/>
-                <div class="btn-group">
-                    <button class="btn btn-primary" type="submit">查找</button>
-                    <a href="/" role="button" class="btn btn-primary">返回首页</a>
-                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">查找</button>
+                <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
             </form>
             {{fail}}
         </div>

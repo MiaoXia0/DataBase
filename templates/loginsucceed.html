@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/body.css">
     <script src="/static/js/jquery-3.5.1.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,18 +11,20 @@
 </head>
 <body>
 <div class="container">
-    <div class="row justify-content-center bg-light" style="height:500px">
+    <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
-            用户{{username}}成功登录!<br/>
-            用户类型为
-            {% if usertype == 'student' %}
-            学生
-            {% elif usertype == 'teacher' %}
-            教师
-            {% endif %}
+            <h2>用户{{username}}成功登录!<br/></h2>
+            <h3>
+                用户类型为
+                {% if usertype == 'student' %}
+                学生
+                {% elif usertype == 'teacher' %}
+                教师
+                {% endif %}
+            </h3>
             <br/>
-            <a href="{{next}}" role="button" class="btn btn-primary">返回</a>
+            <a href="{{next}}" role="button" class="btn btn-lg btn-primary btn-block">返回</a>
+        </div>
     </div>
-</div>
 </body>
 </html>

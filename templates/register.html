@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>学生信息管理系统 - 注册</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/body.css">
@@ -33,7 +33,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">用户名</div>
                     </div>
-                    <input class="form-control" placeholder="用户名" name="username"　required　autofocus>
+                    <input class="form-control" placeholder="用户名" name="username"　autofocus required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -66,7 +66,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">姓名</div>
                     </div>
-                    <input class="form-control" placeholder="姓名" name="name">
+                    <input class="form-control" placeholder="姓名" name="name" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -81,26 +81,26 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">年龄</div>
                     </div>
-                    <input class="form-control" placeholder="年龄" name="age">
+                    <input class="form-control" type="number" placeholder="年龄" name="age" oninput="if(value<1)value=1" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">系</div>
                     </div>
-                    <input class="form-control" placeholder="系" name="dept">
+                    <input class="form-control" placeholder="系" name="dept" required>
                 </div>
                 <div class="stu">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">年级</div>
                         </div>
-                        <input class="form-control" class="stu" placeholder="年级" name="grade">
+                        <input class="form-control" type="number" value="1" class="stu" placeholder="年级" name="grade" oninput="if(value<1)value=1;if(value>4)value=4" required>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">班级</div>
                         </div>
-                        <input class="form-control" class="stu" placeholder="班级" name="class">
+                        <input class="form-control" type="number" class="stu" placeholder="班级" name="class" required>
                     </div>
                 </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
