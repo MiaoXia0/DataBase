@@ -15,16 +15,16 @@
             if(selected == "student"){
                 $(".stu").show();
                 $(".tch").hide();
-                $("#class").attr("required", "required");
-                $("#grade").attr("required", "required");
+                $("#stuclass").attr("required", "required");
             }else if(selected == "teacher"){
                 $(".stu").hide();
                 $(".tch").show();
                 $("#stuclass").removeAttr("required");
-                $("#stugrade").removeAttr("required");
             }
         })
     });
+
+
     </script>
 </head>
 <body>
@@ -37,13 +37,14 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">用户名</div>
                     </div>
-                    <input class="form-control" placeholder="用户名" name="username" 　autofocus required>
+                    <input class="form-control" placeholder="用户名" name="username" maxlength="16" 　autofocus required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">密码</div>
                     </div>
-                    <input class="form-control" placeholder="密码" name="password" type="password" 　required>
+                    <input class="form-control" placeholder="密码" name="password" maxlength="16" type="password"
+                           　required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -70,7 +71,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">姓名</div>
                     </div>
-                    <input class="form-control" placeholder="姓名" name="name" required>
+                    <input class="form-control" placeholder="姓名" name="name" maxlength="16" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -85,29 +86,35 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">年龄</div>
                     </div>
-                    <input class="form-control" type="number" placeholder="年龄" name="age" oninput="if(value<1)value=1"
+                    <input class="form-control" type="number" placeholder="年龄" name="age" maxlength="3"
+                           oninput="if(value<0)value=1;if(value.length>3)value=value.slice(0,3)"
                            required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">系</div>
                     </div>
-                    <input class="form-control" placeholder="系" name="dept" required>
+                    <input class="form-control" placeholder="系" name="dept" maxlength="16" required>
                 </div>
                 <div class="stu">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">年级</div>
                         </div>
-                        <input id="stugrade" class="form-control stu" type="number" value="1" placeholder="年级" name="grade"
-                               oninput="if(value<1)value=1;if(value>4)value=4" required>
+                        <select name="grade" class="form-control stu">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">班级</div>
                         </div>
                         <input id="stuclass" class="form-control stu" type="number" placeholder="班级"
-                               oninput="if(value<1)value=1" name="class" required>
+                               oninput="if(value<1)value=1;if(value.length>2)value=value.slice(0,2)" name="class"
+                               required>
                     </div>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
