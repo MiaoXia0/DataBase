@@ -145,7 +145,10 @@ def statusSelectP():
             Sum = 0.0
             for item in ScoreTable:
                 Sum += item['score']
-            avg = Sum / len(ScoreTable)
+            if len(ScoreTable) == 0:
+                avg=0
+            else:
+                avg = Sum / len(ScoreTable)
             return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avg=avg)
         else:
             return render_template('statusSelect.html', fail='找不到学生')
@@ -293,7 +296,10 @@ def score():
     Sum = 0.0
     for item in st:
         Sum += item['score']
-    avg = Sum / len(st)
+    if len(st) == 0:
+        avg = 0
+    else:
+        avg = Sum / len(st)
     return render_template('score.html', ScoreTable=st, avg=avg)
 
 
