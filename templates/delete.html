@@ -79,11 +79,9 @@
             </form>
             <form action="/delete" method="post">
                 <input type="hidden" name="num" value="{{num}}">
-                <div class="btn-group-vertical">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">删除全部</button>
-                    <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
-                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">删除全部</button>
             </form>
+            <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
             {{succeed}}
         </div>
     </div>

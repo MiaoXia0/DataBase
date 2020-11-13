@@ -45,7 +45,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">姓名</span>
                     </div>
-                    <input class="form-control" placeholder="姓名" name="name" value="{{name}}">
+                    <input class="form-control" placeholder="姓名" name="name" value="{{name}}" required>
                 </div>
                 {% if sex == 'Male' %}
                 <div class="input-group mb-3">
@@ -72,26 +72,26 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">年龄</span>
                     </div>
-                    <input class="form-control" placeholder="年龄" name="age" value="{{age}}">
+                    <input class="form-control" placeholder="年龄" name="age" value="{{age}}" type="number" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">系</span>
                     </div>
-                    <input class="form-control" placeholder="系" name="dept" value="{{dept}}">
+                    <input class="form-control" placeholder="系" name="dept" value="{{dept}}" required>
                 </div>
                 {% if type == 'student' %}
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">年级</span>
                     </div>
-                    <input class="form-control" placeholder="年级" class="stu" name="grade" value="{{grade}}">
+                    <input class="form-control stu" placeholder="年级" name="grade" value="{{grade}}" type="number" oninput="if(value>4)value=4;if(value<1)value=1" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">班级</span>
                     </div>
-                    <input class="form-control" placeholder="班级" name="class" value="{{classs}}">
+                    <input class="form-control" placeholder="班级" name="class" value="{{classs}}" type="number" required>
                 </div>
                 {% endif %}
                 <input type="hidden" name="username" value="{{username}}"><br/>
