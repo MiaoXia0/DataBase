@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/body.css">
     <script src="/static/js/jquery-3.5.1.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>学生信息管理系统 - 主页</title>
 </head>
 <body>
 <div class="container">
-    <div class="row justify-content-center bg-light" style="height:500px">
+    <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
             <h2>学生信息管理系统</h2>
             {% if login == 1 %}
@@ -22,24 +23,20 @@
             {% else %}
             教师
             {% endif %}<br/>
-            <div class="btn-group-vertical">
-                <a href="status" role="button" class="btn btn-primary">个人信息</a>
-                {% if type == 'student' %}
-                <a href="alterself" role="button" class="btn btn-primary">修改信息</a>
-                <a href="score" role="button" class="btn btn-primary">个人成绩</a>
-                {% else %}
-                <a href="statusSelect" role="button" class="btn btn-primary">学生查询</a>
-                <a href="alter" role="button" class="btn btn-primary">修改信息</a>
-                <a href="add" role="button" class="btn btn-primary">录入成绩</a>
-                <a href="deletenum" role="button" class="btn btn-primary">删除成绩</a>
-                {% endif %}
-                <a href="logout" role="button" class="btn btn-primary">退出登录</a>
-            </div>
+            <a href="status" role="button" class="btn btn-lg btn-primary btn-block">个人信息</a>
+            {% if type == 'student' %}
+            <a href="alterself" role="button" class="btn btn-lg btn-primary btn-block">修改信息</a>
+            <a href="score" role="button" class="btn btn-lg btn-primary btn-block">个人成绩</a>
             {% else %}
-            <div class="btn-group-vertical">
-                <a href="/login" role="button" class="btn btn-primary">登录</a>
-                <a href="/register" role="button" class="btn btn-primary">注册</a>
-            </div>
+            <a href="statusSelect" role="button" class="btn btn-lg btn-primary btn-block">学生查询</a>
+            <a href="alter" role="button" class="btn btn-lg btn-primary btn-block">修改信息</a>
+            <a href="add" role="button" class="btn btn-lg btn-primary btn-block">录入成绩</a>
+            <a href="deletenum" role="button" class="btn btn-lg btn-primary btn-block">删除成绩</a>
+            {% endif %}
+            <a href="logout" role="button" class="btn btn-lg btn-primary btn-block">退出登录</a>
+            {% else %}
+            <a href="/login" role="button" class="btn btn-lg btn-primary btn-block">登录</a>
+            <a href="/register" role="button" class="btn btn-lg btn-primary btn-block">注册</a>
             {% endif %}
         </div>
     </div>

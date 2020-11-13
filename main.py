@@ -55,14 +55,14 @@ def log():
                                        username=username, usertype=current_user.type, next='/')
 
         else:
-            return render_template('login.html', fail='登陆失败')
+            return render_template('sign-in.html', fail='登陆失败')
 
     elif request.method == 'GET':
         try:
             next = request.args['next']
         except:
             next = ''
-        return render_template('login.html', next=next)
+        return render_template('sign-in.html', next=next)
 
 
 @app.route('/register', methods=['GET'])
