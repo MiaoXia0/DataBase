@@ -17,33 +17,33 @@
             <form action="/alterself" method="post">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">账号</span>
+                        <div class="input-group-text">账号</div>
                     </div>
                     <input class="form-control" type="text" value="{{username}}" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">账号类型</span>
+                        <div class="input-group-text">账号类型</div>
                     </div>
                     <input class="form-control" type="text"
                            value="{% if type == 'student' %}学生{% else %}教师{% endif %}" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">{% if type == 'student' %}学号{% else %}编号{% endif %}</span>
+                        <div class="input-group-text">{% if type == 'student' %}学号{% else %}编号{% endif %}</div>
                     </div>
                     <input class="form-control" type="text" value="{{num}}" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">密码</span>
+                        <div class="input-group-text">密码</div>
                     </div>
                     <input class="form-control" placeholder="新密码" name="pswnew" type="password">
                     <font style="color:grey">(不修改请留空)</font>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">姓名</span>
+                        <div class="input-group-text">姓名</div>
                     </div>
                     <input class="form-control" placeholder="姓名" name="name" value="{{name}}" required>
                 </div>
@@ -70,26 +70,26 @@
                 {% endif %}
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">年龄</span>
+                        <div class="input-group-text">年龄</div>
                     </div>
                     <input class="form-control" placeholder="年龄" name="age" value="{{age}}" type="number" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">系</span>
+                        <div class="input-group-text">系</div>
                     </div>
                     <input class="form-control" placeholder="系" name="dept" value="{{dept}}" required>
                 </div>
                 {% if type == 'student' %}
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">年级</span>
+                        <div class="input-group-text">年级</div>
                     </div>
                     <input class="form-control stu" placeholder="年级" name="grade" value="{{grade}}" type="number" oninput="if(value>4)value=4;if(value<1)value=1" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">班级</span>
+                        <div class="input-group-text">班级</div>
                     </div>
                     <input class="form-control" placeholder="班级" name="class" value="{{classs}}" type="number" required>
                 </div>

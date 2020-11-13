@@ -25,6 +25,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">学号</div>
                     </div>
+
                     <div class="input-group-prepend">
                         <div class="input-group-text">stu</div>
                     </div>
@@ -34,20 +35,21 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">课程名</div>
                     </div>
-                    <input type="text" name="Cname" required>
+                    <input class="form-control" type="text" name="Cname" required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">成绩</div>
                     </div>
-                    <input type="text" name="score" type="number" oninput="if(value<0)value=0;if(value>100)value=100"
+                    <input class="form-control" type="text" name="score" type="number" oninput="if(value<0)value=0;if(value>100)value=100"
                            required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">学年</div>
                     </div>
-                    <input type="text" name="grade" type="number" oninput="if(value>4)value=4;if(value<1)value=1" required>
+                    <input class="form-control" type="text" name="grade" type="number" oninput="if(value>4)value=4;if(value<1)value=1"
+                           required>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">录入</button>
                 <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
