@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/body.css">
+    <script src="/static/js/jquery-3.5.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>学生信息管理系统 - 请假</title>
+</head>
+<body class="text-center">
+<div class="container">
+    <div class="row justify-content-center" style="height:500px">
+        <div class="align-self-center" style="text-align:center;">
+            <h3>请假</h3>
+            <form action="/leave" method="post">
+                <div class="input-group mb3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">开始时间</div>
+                    </div>
+                    <input class="form-control" placeholder="开始时间" name="timestart" type="date" required>
+                </div>
+                <div class="input-group mb3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">结束时间</div>
+                    </div>
+                    <input class="form-control" placeholder="结束时间" name="timestop" type="date" required>
+                </div>
+                <div class="input-group mb3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">申请教师编号</div>
+                    </div>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">tch</div>
+                    </div>
+                    <input class="form-control" placeholder="申请教师" name="Tnum" type="text" maxlength="10" required>
+                </div>
+                <div class="input-group-vertical mb3">
+                    <div class="input-group-text">请假理由：</div>
+                    <textarea style="height:190px;" class="form-control" placeholder="请假理由(0-100字)" name="reason" maxlength="100"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary btn-lg btn-block">
+                {{message}}
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

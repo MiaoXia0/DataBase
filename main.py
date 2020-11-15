@@ -146,7 +146,7 @@ def statusSelectP():
             for item in ScoreTable:
                 Sum += item['score']
             if len(ScoreTable) == 0:
-                avg=0
+                avg = 0
             else:
                 avg = Sum / len(ScoreTable)
             return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avg=avg)
@@ -337,6 +337,109 @@ def deleteone():
                                dept=user.getdept(usr), scores=scores, succeed='删除失败！')
 
 
+@app.route('/leave', methods=['GET'])
+@login_required
+def leave():
+    lst: list[dict] = SQL.select('select * from leave where Snum=\'%s\'' % user.getnum(current_user.id))
+    for item in lst:
+        if item['status'] == '未批准':
+            return render_template('return.html', message='当前有未批准请假！')
+        if item['status'] == '未销假':
+            return render_template('return.html', message='当前有未销假请假！')
+    return render_template('leave.html')
+
+
+@app.route('/leave', methods=['POST'])
+@login_required
+def leavep():
+    reason = request.form['reason']
+    Tnum = 'tch' + request.form['Tnum']
+    timestart = request.form['timestart']
+    timestop = request.form['timestop']
+    if user.isExistTch(Tnum):
+        SQL.cur.execute('''insert into leave (Snum, Tnum, reason, timestart, timestop, status)
+        values ('%s', '%s', '%s', '%s', '%s', '未批准')
+        ''' % (user.getnum(current_user.id), Tnum, reason, timestart, timestop))
+        SQL.conn.commit()
+        return render_template('return.html', message='提交成功！')
+    else:
+        return render_template('leave.html', message='无此教师')
+
+
+@app.route('/currleave', methods=['GET'])
+@login_required
+def currleave():
+    Sname = user.getname(current_user.id)
+    Snum = user.getnum(current_user.id)
+    LeaveTable: list[dict] = SQL.select('select * from leave where Snum = \'%s\'' % Snum)
+    for table in LeaveTable:
+        Tname = user.getname(user.getaccount(table['Tnum']))
+        table['Tname'] = Tname
+    return render_template('currleave.html', LeaveTable=LeaveTable, Sname=Sname)
+
+
+@app.route('/leavemanage', methods=['GET'])
+@login_required
+def leavemanage():
+    Tname = user.getname(current_user.id)
+    Tnum = user.getnum(current_user.id)
+    LeaveTable: list[dict] = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
+    for table in LeaveTable:
+        Sname = user.getname(user.getaccount(table['Snum']))
+        table['Sname'] = Sname
+    return render_template('leavemanage.html', LeaveTable=LeaveTable, Sname=Sname)
+
+
+@app.route('/leavemanage', methods=['POST'])
+@login_required
+def leavemanagep():
+    Snum = request.form['Snum']
+    Tnum = user.getnum(current_user.id)
+    act = request.form['act']
+    status = request.form['status']
+    if status == '未批准':
+        if act == '准假':
+            SQL.cur.execute(
+                'update leave set status=\'未销假\' where status=\'未批准\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
+            SQL.conn.commit()
+        elif act == '驳回':
+            SQL.cur.execute(
+                'update leave set status=\'已驳回\' where status=\'未批准\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
+            SQL.conn.commit()
+    elif status == '未销假':
+        SQL.cur.execute(
+            'update leave set status=\'已销假\' where status=\'未销假\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
+        SQL.conn.commit()
+    LeaveTable: list[dict] = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
+    for table in LeaveTable:
+        Sname = user.getname(user.getaccount(table['Snum']))
+        table['Sname'] = Sname
+    return render_template('leavemanage.html', LeaveTable=LeaveTable, Sname=Sname)
+
+
+@app.route('/course', methods=['GET'])
+@login_required
+def course():
+    return render_template('course.html')
+
+
+@app.route('/courses', methods=['GET'])
+@login_required
+def courses():
+    return render_template('courses.html')
+
+
+@app.route('/courseset', methods=['GET'])
+@login_required
+def courseset():
+    return render_template('courseset.html')
+
+
+@app.route('/mycourse', methods=['GET'])
+@login_required
+def mycourse():
+    return render_template('mycourse.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True, port='80')
-

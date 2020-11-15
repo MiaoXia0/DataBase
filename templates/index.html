@@ -18,22 +18,31 @@
             <a href="status" role="button" class="btn btn-lg btn-primary btn-block">个人信息</a>
             {% if type == 'student' %}
             <a href="alterself" role="button" class="btn btn-lg btn-primary btn-block">修改信息</a>
+            <a href="course" role="button" class="btn btn-lg btn-primary btn-block">选课(未完成)</a>
+            <a href="courses" role="button" class="btn btn-lg btn-primary btn-block">已选课程(未完成)</a>
             <a href="score" role="button" class="btn btn-lg btn-primary btn-block">个人成绩</a>
+            <a href="currleave" role="button" class="btn btn-lg btn-primary btn-block">当前请假</a>
+            <a href="leave" role="button" class="btn btn-lg btn-primary btn-block">请假</a>
             {% else %}
             <a href="statusSelect" role="button" class="btn btn-lg btn-primary btn-block">学生查询</a>
             <a href="alter" role="button" class="btn btn-lg btn-primary btn-block">修改信息</a>
+            <a href="leavemanage" role="button" class="btn btn-lg btn-primary btn-block">请假处理</a>
+            <a href="courseset" role="button" class="btn btn-lg btn-primary btn-block">开课(未完成)</a>
+            <a href="mycourse" role="button" class="btn btn-lg btn-primary btn-block">我开的课(未完成)</a>
             <a href="add" role="button" class="btn btn-lg btn-primary btn-block">录入成绩</a>
             <a href="deletenum" role="button" class="btn btn-lg btn-primary btn-block">删除成绩</a>
             {% endif %}
             <a href="logout" role="button" class="btn btn-lg btn-primary btn-block">退出登录</a>
-            {{username}} 已登录<br/>
-            用户类型：
-            {% if type == 'student' %}
-            学生
-            {% elif type == 'teacher' %}
-            教师
-            {% endif %}<br/>
-            {% else %}
+            <font size="5">
+                {{username}} 已登录<br/>
+                用户类型：
+                {% if type == 'student' %}
+                学生
+                {% elif type == 'teacher' %}
+                教师
+                {% endif %}<br/>
+                {% else %}
+            </font>
             <a href="/login" role="button" class="btn btn-lg btn-primary btn-block">登录</a>
             <a href="/register" role="button" class="btn btn-lg btn-primary btn-block">注册</a>
             {% endif %}
