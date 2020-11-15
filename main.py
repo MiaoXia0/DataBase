@@ -4,6 +4,8 @@ from pandas import DataFrame
 import SQL
 import user
 from user import User
+from wsgiref.simple_server import make_server
+
 
 app = Flask(__name__)
 app.secret_key = 'fc40b27b6b513b756ce785f3eecf8a6d'
@@ -442,4 +444,5 @@ def mycourse():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port='80')
+    server = make_server(host='0.0.0.0', port=80, app=app)
+    server.serve_forever()
