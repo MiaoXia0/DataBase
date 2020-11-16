@@ -514,7 +514,8 @@ def coursesetp():
         Tnum = user.getnum(current_user.id)
         SQL.cur.execute('insert into courses (name, num, Tnum) values (\'%s\', \'%s\', \'%s\')' % (name, num, Tnum))
         SQL.conn.commit()
-        return render_template('courseset.html', message='开课成功')
+        Cnum = SQL.selectone('select count(num) cnt from courses')['cnt'] + 1
+        return render_template('courseset.html', message='开课成功', Cnum=Cnum)
     else:
         return render_template('return.html', message='学生不能开课')
 
