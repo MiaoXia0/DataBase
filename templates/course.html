@@ -9,7 +9,48 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<body>
-
+<body class="text-center">
+<div class="container">
+    <div class="row justify-content-center" style="height:500px">
+        <div class="align-self-center" style="text-align:center;">
+            <h3>已选课程</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>课程号</th>
+                    <th>课程名</th>
+                    <th>年级</th>
+                </tr>
+                {% for item in myct %}
+                <tr>
+                    <td>{{item['Cnum']}}</td>
+                    <td>{{item['Cname']}}</td>
+                    <td>{{item['grade']}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h3>选课</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>课程号</th>
+                    <th>课程名</th>
+                    <th>开课教师</th>
+                    <th>操作</th>
+                </tr>
+                {% for i in ct %}
+                <tr>
+                    <td>{{i['num']}}</td>
+                    <td>{{i['name']}}</td>
+                    <td>{{i['Tname']}}</td>
+                    <form action="/course" method="post">
+                        <td>
+                            <button type="submit" class="btn btn-sm btn-primary" name="Cnum" value="{{i['num']}}">选课/退课</button>
+                        </td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>

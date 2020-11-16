@@ -263,8 +263,26 @@ def addg():
         return render_template('return.html', message='学生不能录入成绩！')
     else:
         Tnum = user.getnum(current_user.id)
-        ct = SQL.select('select * from courses where Tnum=\'%s\'' % Tnum)
-        return render_template('add.html', Tnum=user.getnum(current_user.id), ct=ct)
+        numt = SQL.select(
+            '''select Snum
+            from cs
+            where Cnum in(
+                    select Cnum
+                    from courses
+                    where Tnum='%s'
+                )''' % Tnum)
+        ct = SQL.select('''select * from courses where num in(
+            select Cnum from cs where Snum in(
+                select Snum
+                from cs
+                where Cnum in(
+                    select Cnum
+                    from courses
+                    where Tnum='%s'
+                )
+            )
+        )''' % Tnum)
+        return render_template('add.html', Tnum=user.getnum(current_user.id), ct=ct, numt=numt)
 
 
 @app.route('/add', methods=['POST'])
@@ -274,7 +292,7 @@ def addp():
         return render_template('return.html', message='学生不能录入成绩！')
     else:
         Tnum = user.getnum(current_user.id)
-        Snum = 'stu' + request.form['Snum']
+        Snum = request.form['Snum']
         ct = SQL.select('select * from courses where Tnum=\'%s\'' % Tnum)
         if user.isExistStu(Snum):
             Cnum = request.form['Cnum']
@@ -424,14 +442,60 @@ def leavemanagep():
 
 @app.route('/course', methods=['GET'])
 @login_required
-def course():
-    return render_template('course.html')
+def courseg():
+    Snum = user.getnum(current_user.id)
+    myct = SQL.select('select * from cs where Snum=\'%s\'' % Snum)
+    for t in myct:
+        Cname = SQL.selectone('select name from courses where num=\'%s\'' % t['Cnum'])['name']
+        t['Cname'] = Cname
+    ct = SQL.select('select * from courses')
+    for t in ct:
+        t['Tname'] = user.getname(user.getaccount(t['Tnum']))
+    return render_template('course.html', ct=ct, myct=myct)
+
+
+@app.route('/course', methods=['POST'])
+@login_required
+def coursep():
+    Snum = user.getnum(current_user.id)
+    myct = SQL.select('select * from cs where Snum=\'%s\'' % Snum)
+    Cnum = request.form['Cnum']
+    for t in myct:
+        if Cnum == t['Cnum']:
+            SQL.cur.execute('delete from cs where Cnum=\'%s\'' % Cnum)
+            SQL.conn.commit()
+            ct = SQL.select('select * from courses')
+            for tct in ct:
+                tct['Tname'] = user.getname(user.getaccount(tct['Tnum']))
+            myct = SQL.select('select * from cs where Snum=\'%s\'' % Snum)
+            for myt in myct:
+                Cname = SQL.selectone('select name from courses where num=\'%s\'' % myt['Cnum'])['name']
+                myt['Cname'] = Cname
+            return render_template('course.html', ct=ct, myct=myct)
+    grade = int(user.getgrade(current_user.id))
+    SQL.cur.execute('''insert into cs (Cnum, Snum, grade)
+    values ('%s', '%s', '%d')
+    ''' % (Cnum, Snum, grade))
+    SQL.conn.commit()
+    ct = SQL.select('select * from courses')
+    for t in ct:
+        t['Tname'] = user.getname(user.getaccount(t['Tnum']))
+    myct = SQL.select('select * from cs where Snum=\'%s\'' % Snum)
+    for t in myct:
+        Cname = SQL.selectone('select name from courses where num=\'%s\'' % t['Cnum'])['name']
+        t['Cname'] = Cname
+    return render_template('course.html', ct=ct, myct=myct)
 
 
 @app.route('/courses', methods=['GET'])
 @login_required
 def courses():
-    return render_template('courses.html')
+    Snum = user.getnum(current_user.id)
+    ct = SQL.select('select * from cs where Snum=\'%s\'' % Snum)
+    for t in ct:
+        Cname = SQL.selectone('select name from courses where num=\'%s\'' % t['Cnum'])['name']
+        t['Cname'] = Cname
+    return render_template('courses.html', ct=ct)
 
 
 @app.route('/courseset', methods=['GET'])

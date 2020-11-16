@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>学生信息管理系统 - 录入成绩</title>
 </head>
-<body>
+<body class="text-center">
 <div class="container">
     <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
@@ -42,7 +42,11 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">stu</div>
                     </div>
-                    <input class="form-control" type="text" name="Snum" required>
+                    <select name="Snum">
+                        {% for i in numt %}
+                            <option value="{{i['Snum']}}">{{i['Snum']}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

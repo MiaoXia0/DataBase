@@ -9,7 +9,27 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<body>
-
+<body class="text-center">
+<div class="container">
+    <div class="row justify-content-center" style="height:500px">
+        <div class="align-self-center" style="text-align:center;">
+            <table class="table table-hover">
+                <tr>
+                    <th>课程号</th>
+                    <th>课程名</th>
+                    <th>年级</th>
+                </tr>
+                {% for item in ct %}
+                <tr>
+                    <td>{{item['Cnum']}}</td>
+                    <td>{{item['Cname']}}</td>
+                    <td>{{item['grade']}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a href="/" role="button" class="btn btn-primary btn-lg btn-block">返回首页</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
