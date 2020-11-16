@@ -9,7 +9,32 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<body>
-
+<body class="text-center">
+<div class="container">
+    <div class="row justify-content-center" style="height:500px;">
+        <div class="align-self-center" style="text-align:center;">
+            <form action="courseset" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">课程编号</div>
+                    </div>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">cour</div>
+                    </div>
+                    <input class="form-control" type="text" value="{{Cnum}}" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">课程名</div>
+                    </div>
+                    <input class="form-control" type="text" name="name">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">开课</button>
+                <a href="/" role="button" class="btn btn-primary btn-lg btn-block">返回首页</a>
+            </form>
+            {{message}}
+        </div>
+    </div>
+</div>
 </body>
 </html>

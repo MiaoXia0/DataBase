@@ -6,7 +6,6 @@ import user
 from user import User
 from wsgiref.simple_server import make_server
 
-
 app = Flask(__name__)
 app.secret_key = 'fc40b27b6b513b756ce785f3eecf8a6d'
 login_manager = LoginManager()
@@ -259,29 +258,33 @@ def delete():
 
 @app.route('/add', methods=['GET'])
 @login_required
-def addp():
-    if user.gettype(current_user.id) == 'student':
-        return render_template('return.html', message='学生不能录入成绩！')
-    else:
-        return render_template('add.html', Tnum=user.getnum(current_user.id))
-
-
-@app.route('/add', methods=['POST'])
-@login_required
 def addg():
     if user.gettype(current_user.id) == 'student':
         return render_template('return.html', message='学生不能录入成绩！')
     else:
-        Tnum = request.form['Tnum']
+        Tnum = user.getnum(current_user.id)
+        ct = SQL.select('select * from courses where Tnum=\'%s\'' % Tnum)
+        return render_template('add.html', Tnum=user.getnum(current_user.id), ct=ct)
+
+
+@app.route('/add', methods=['POST'])
+@login_required
+def addp():
+    if user.gettype(current_user.id) == 'student':
+        return render_template('return.html', message='学生不能录入成绩！')
+    else:
+        Tnum = user.getnum(current_user.id)
         Snum = 'stu' + request.form['Snum']
+        ct = SQL.select('select * from courses where Tnum=\'%s\'' % Tnum)
         if user.isExistStu(Snum):
-            Cname = request.form['Cname']
-            score = int(request.form['score'])
+            Cnum = request.form['Cnum']
+            Cname = SQL.selectone('select name from courses where num=\'%s\'' % Cnum)['name']
+            Score = int(request.form['score'])
             grade = int(request.form['grade'])
-            user.scorein(Snum, Tnum, Cname, score, grade)
-            return render_template('add.html', Tnum=user.getnum(current_user.id), message='录入成功！')
+            user.scorein(Snum, Tnum, Cname, Score, grade)
+            return render_template('add.html', Tnum=Tnum, ct=ct, message='录入成功！')
         else:
-            return render_template('add.html', Tnum=user.getnum(current_user.id), message='学生不存在！')
+            return render_template('add.html', Tnum=Tnum, ct=ct, message='学生不存在！')
 
 
 @app.route('/score', methods=['GET'])
@@ -383,13 +386,13 @@ def currleave():
 @app.route('/leavemanage', methods=['GET'])
 @login_required
 def leavemanage():
-    Tname = user.getname(current_user.id)
     Tnum = user.getnum(current_user.id)
     LeaveTable: list[dict] = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
-    for table in LeaveTable:
-        Sname = user.getname(user.getaccount(table['Snum']))
-        table['Sname'] = Sname
-    return render_template('leavemanage.html', LeaveTable=LeaveTable, Sname=Sname)
+    if len(LeaveTable) > 0:
+        for table in LeaveTable:
+            Sname = user.getname(user.getaccount(table['Snum']))
+            table['Sname'] = Sname
+    return render_template('leavemanage.html', LeaveTable=LeaveTable)
 
 
 @app.route('/leavemanage', methods=['POST'])
@@ -434,15 +437,32 @@ def courses():
 @app.route('/courseset', methods=['GET'])
 @login_required
 def courseset():
-    return render_template('courseset.html')
+    Cnum = SQL.selectone('select count(num) cnt from courses')['cnt'] + 1
+    return render_template('courseset.html', Cnum=Cnum)
+
+
+@app.route('/courseset', methods=['POST'])
+@login_required
+def coursesetp():
+    if current_user.type == 'teacher':
+        name = request.form['name']
+        num = 'cour' + str(SQL.selectone('select count(num) cnt from courses')['cnt'] + 1)
+        Tnum = user.getnum(current_user.id)
+        SQL.cur.execute('insert into courses (name, num, Tnum) values (\'%s\', \'%s\', \'%s\')' % (name, num, Tnum))
+        SQL.conn.commit()
+        return render_template('courseset.html', message='开课成功')
+    else:
+        return render_template('return.html', message='学生不能开课')
 
 
 @app.route('/mycourse', methods=['GET'])
 @login_required
 def mycourse():
-    return render_template('mycourse.html')
+    Tnum = user.getnum(current_user.id)
+    ct = SQL.select('select * from courses where Tnum=\'%s\'' % Tnum)
+    return render_template('mycourse.html', ct=ct)
 
 
 if __name__ == '__main__':
-    server = make_server(host='0.0.0.0', port=80, app=app)
-    server.serve_forever()
+    server = make_server(host='0.0.0.0', port=80, app=app)  # 使用WSGI服务器
+    server.serve_forever()  # 服务器启动 永久

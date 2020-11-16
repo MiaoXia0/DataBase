@@ -13,6 +13,19 @@
 <div class="container">
     <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
+            <h2>我开的课</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>课程号</th>
+                    <th>课程名</th>
+                </tr>
+                {% for item in ct %}
+                <tr>
+                    <td>{{item['num']}}</td>
+                    <td>{{item['name']}}</td>
+                </tr>
+                {% endfor %}
+            </table>
             <h2>成绩录入</h2>
             <form action="add" method="post">
                 <div class="input-group mb-3">
@@ -33,22 +46,28 @@
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">课程名</div>
+                        <div class="input-group-text">课程号</div>
                     </div>
-                    <input class="form-control" type="text" name="Cname" required>
+                    <select name="Cnum" class="form-control">
+                        {% for i in ct %}
+                            <option value="{{i['num']}}">{{i['num']}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">成绩</div>
                     </div>
-                    <input class="form-control" type="text" name="score" type="number" oninput="if(value<0)value=0;if(value>100)value=100"
+                    <input class="form-control" type="text" name="score" type="number"
+                           oninput="if(value<0)value=0;if(value>100)value=100"
                            required>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">学年</div>
                     </div>
-                    <input class="form-control" type="text" name="grade" type="number" oninput="if(value>4)value=4;if(value<1)value=1"
+                    <input class="form-control" type="text" name="grade" type="number"
+                           oninput="if(value>4)value=4;if(value<1)value=1"
                            required>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">录入</button>
