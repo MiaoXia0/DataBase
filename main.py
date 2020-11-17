@@ -363,20 +363,21 @@ def deleteone():
 @app.route('/leave', methods=['GET'])
 @login_required
 def leave():
+    tchs = SQL.select('select num from teachers')
     lst: list[dict] = SQL.select('select * from leave where Snum=\'%s\'' % user.getnum(current_user.id))
     for item in lst:
         if item['status'] == '未批准':
             return render_template('return.html', message='当前有未批准请假！')
         if item['status'] == '未销假':
             return render_template('return.html', message='当前有未销假请假！')
-    return render_template('leave.html')
+    return render_template('leave.html', tchs=tchs)
 
 
 @app.route('/leave', methods=['POST'])
 @login_required
 def leavep():
     reason = request.form['reason']
-    Tnum = 'tch' + request.form['Tnum']
+    Tnum = request.form['Tnum']
     timestart = request.form['timestart']
     timestop = request.form['timestop']
     if user.isExistTch(Tnum):
@@ -418,7 +419,10 @@ def leavemanage():
 def leavemanagep():
     Snum = request.form['Snum']
     Tnum = user.getnum(current_user.id)
-    act = request.form['act']
+    try:
+        act = request.form['act']
+    except:
+        pass
     status = request.form['status']
     if status == '未批准':
         if act == '准假':
@@ -501,6 +505,8 @@ def courses():
 @app.route('/courseset', methods=['GET'])
 @login_required
 def courseset():
+    if user.gettype(current_user.id) == 'student':
+        return render_template('return.html', message='学生不能开课')
     Cnum = SQL.selectone('select count(num) cnt from courses')['cnt'] + 1
     return render_template('courseset.html', Cnum=Cnum)
 
@@ -523,11 +529,14 @@ def coursesetp():
 @app.route('/mycourse', methods=['GET'])
 @login_required
 def mycourse():
+    if user.gettype(current_user.id) == 'student':
+        return render_template('return.html', message='学生不能开课')
     Tnum = user.getnum(current_user.id)
     ct = SQL.select('select * from courses where Tnum=\'%s\'' % Tnum)
     return render_template('mycourse.html', ct=ct)
 
 
 if __name__ == '__main__':
-    server = make_server(host='0.0.0.0', port=80, app=app)  # 使用WSGI服务器
-    server.serve_forever()  # 服务器启动 永久
+    app.run(host='0.0.0.0', port=80, debug=True)
+    # server = make_server(host='0.0.0.0', port=80, app=app)  # 使用WSGI服务器
+    # server.serve_forever()  # 服务器启动 永久

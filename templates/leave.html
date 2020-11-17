@@ -19,22 +19,23 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">开始时间</div>
                     </div>
-                    <input class="form-control" placeholder="开始时间" name="timestart" type="date" required>
+                    <input class="form-control" placeholder="开始时间" name="timestart" type="datetime-local" required>
                 </div>
                 <div class="input-group mb3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">结束时间</div>
                     </div>
-                    <input class="form-control" placeholder="结束时间" name="timestop" type="date" required>
+                    <input class="form-control" placeholder="结束时间" name="timestop" type="datetime-local" required>
                 </div>
                 <div class="input-group mb3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">申请教师编号</div>
                     </div>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">tch</div>
-                    </div>
-                    <input class="form-control" placeholder="申请教师" name="Tnum" type="text" maxlength="10" required>
+                    <select name="Tnum" class="form-control">
+                        {% for t in tchs %}
+                            <option value="{{t['num']}}">{{t['num']}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="input-group-vertical mb3">
                     <div class="input-group-text">请假理由：</div>
