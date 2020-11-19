@@ -364,7 +364,7 @@ def deleteone():
 @login_required
 def leave():
     tchs = SQL.select('select num from teachers')
-    lst: list[dict] = SQL.select('select * from leave where Snum=\'%s\'' % user.getnum(current_user.id))
+    lst = SQL.select('select * from leave where Snum=\'%s\'' % user.getnum(current_user.id))
     for item in lst:
         if item['status'] == '未批准':
             return render_template('return.html', message='当前有未批准请假！')
@@ -395,7 +395,7 @@ def leavep():
 def currleave():
     Sname = user.getname(current_user.id)
     Snum = user.getnum(current_user.id)
-    LeaveTable: list[dict] = SQL.select('select * from leave where Snum = \'%s\'' % Snum)
+    LeaveTable = SQL.select('select * from leave where Snum = \'%s\'' % Snum)
     for table in LeaveTable:
         Tname = user.getname(user.getaccount(table['Tnum']))
         table['Tname'] = Tname
@@ -408,7 +408,7 @@ def leavemanage():
     if user.gettype(current_user.id) == 'student':
         return render_template('return.html', message='学生不能管理请假')
     Tnum = user.getnum(current_user.id)
-    LeaveTable: list[dict] = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
+    LeaveTable = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
     if len(LeaveTable) > 0:
         for table in LeaveTable:
             Sname = user.getname(user.getaccount(table['Snum']))
@@ -441,7 +441,7 @@ def leavemanagep():
         SQL.cur.execute(
             'update leave set status=\'已销假\' where status=\'未销假\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
         SQL.conn.commit()
-    LeaveTable: list[dict] = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
+    LeaveTable = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
     for table in LeaveTable:
         Sname = user.getname(user.getaccount(table['Snum']))
         table['Sname'] = Sname
