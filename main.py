@@ -405,6 +405,8 @@ def currleave():
 @app.route('/leavemanage', methods=['GET'])
 @login_required
 def leavemanage():
+    if user.gettype(current_user.id) == 'student':
+        return render_template('return.html', message='学生不能管理请假')
     Tnum = user.getnum(current_user.id)
     LeaveTable: list[dict] = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
     if len(LeaveTable) > 0:
@@ -417,6 +419,8 @@ def leavemanage():
 @app.route('/leavemanage', methods=['POST'])
 @login_required
 def leavemanagep():
+    if user.gettype(current_user.id) == 'student':
+        return render_template('return.html', message='学生不能管理请假')
     Snum = request.form['Snum']
     Tnum = user.getnum(current_user.id)
     try:
