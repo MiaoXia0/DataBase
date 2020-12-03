@@ -13,17 +13,14 @@
 <div class="container">
     <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
-            <h2>成绩</h2>
+            <h3>全部成绩</h3>
             <table class="table table-hover">
-                <thead>
                 <tr>
                     <th>课程名</th>
                     <th>教师</th>
                     <th>成绩</th>
                     <th>学年</th>
                 </tr>
-                </thead>
-                <tbody>
                 {% for item in ScoreTable %}
                 <tr>
                     <td>{{item['course']}}</td>
@@ -32,9 +29,46 @@
                     <td>{{item['grade']}}</td>
                 </tr>
                 {% endfor %}
-                </tbody>
             </table>
-            平均成绩：{{avg}}
+            <b>平均成绩：</b>{{avg}}
+            <h3>及格成绩</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>课程名</th>
+                    <th>教师</th>
+                    <th>成绩</th>
+                    <th>学年</th>
+                </tr>
+                {% for item in ScoreTable %}
+                {% if item['score'] >= 60 %}
+                <tr>
+                    <td>{{item['course']}}</td>
+                    <td>{{item['Tnum']}}</td>
+                    <td>{{item['score']}}</td>
+                    <td>{{item['grade']}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+            <h3>不及格成绩</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>课程名</th>
+                    <th>教师</th>
+                    <th>成绩</th>
+                    <th>学年</th>
+                </tr>
+                {% for item in ScoreTable %}
+                {% if item['score'] < 60 %}
+                <tr>
+                    <td>{{item['course']}}</td>
+                    <td>{{item['Tnum']}}</td>
+                    <td>{{item['score']}}</td>
+                    <td>{{item['grade']}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
             <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
         </div>
     </div>
