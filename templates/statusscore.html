@@ -13,9 +13,16 @@
 <div class="container">
     <div class="row justify-content-center" style="height:600px">
         <div class="align-self-center" style="text-align:center;">
-            <h2>学生查询</h2><br />
+            <h2>选择学生</h2>
+            <select id="no" class="form-control">
+                {% for i in StatusTable %}
+                    <option>{{i['Num']}}</option>
+                {% endfor %}
+            </select>
+            <br />
             <h3>学生信息</h3>
-            <table class="table table-hover">
+            {% for i in StatusTable %}
+            <table class="{{i['Num']}} table table-hover" style="display:none;">
                 <thead>
                 <tr>
                     <th>账号</th>
@@ -30,31 +37,32 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{StatusTable[0]['account']}}</td>
-                    <td>{{StatusTable[0]['Num']}}</td>
-                    <td>{{StatusTable[0]['Name']}}</td>
-                    <td>{% if StatusTable[0]['sex'] == 'Male' %}男{% elif StatusTable[0]['sex'] == 'Female' %}女{% endif
+                    <td>{{i['account']}}</td>
+                    <td>{{i['Num']}}</td>
+                    <td>{{i['Name']}}</td>
+                    <td>{% if i['sex'] == 'Male' %}男{% elif i['sex'] == 'Female' %}女{% endif
                         %}
                     </td>
-                    <td>{{StatusTable[0]['Age']}}</td>
-                    <td>{{StatusTable[0]['Dept']}}</td>
-                    <td>{{StatusTable[0]['Grade']}}</td>
-                    <td>{{StatusTable[0]['Class']}}</td>
+                    <td>{{i['Age']}}</td>
+                    <td>{{i['Dept']}}</td>
+                    <td>{{i['Grade']}}</td>
+                    <td>{{i['Class']}}</td>
                 </tr>
                 </tbody>
-            </table><br />
+            </table>
+            {% endfor %}
+            <br/>
             <h3>学生成绩</h3>
-            <table class="table table-hover">
-                <thead>
+            {% for i in ScoreTable %}
+
+            <table class="{{i[0]['Snum']}} table table-hover" style="display:none;">
                 <tr>
                     <th>课程名</th>
                     <th>教师</th>
                     <th>成绩</th>
                     <th>学年</th>
                 </tr>
-                </thead>
-                <tbody>
-                {% for item in ScoreTable %}
+                {% for item in i %}
                 <tr>
                     <td>{{item['course']}}</td>
                     <td>{{item['Tnum']}}</td>
@@ -62,12 +70,25 @@
                     <td>{{item['grade']}}</td>
                 </tr>
                 {% endfor %}
-                </tbody>
+
             </table>
-            平均成绩：{{avg}}
+            <span class="{{i[0]['Snum']}}" style="display:none;"><b>平均成绩：</b>{{avgs[i[0]['Snum']]}}</span>
+            {% endfor %}
             <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
+
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("." + $("#no").val()).show();
+    })
+    $("#no").change(function(){
+        $("#no option").each(function(){
+            $("." + $(this).val()).hide();
+        })
+        $("." + $("#no").val()).show();
+    })
+</script>
 </body>
 </html>

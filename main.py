@@ -4,7 +4,6 @@ from pandas import DataFrame
 import SQL
 import user
 from user import User
-from wsgiref.simple_server import make_server
 
 app = Flask(__name__)
 app.secret_key = 'fc40b27b6b513b756ce785f3eecf8a6d'
@@ -139,20 +138,69 @@ def statusSelectP():
     if user.gettype(current_user.id) == 'student':
         return render_template('return.html', message='学生无权查询他人信息')
     else:
-        num = 'stu' + request.form['num']
-        if user.isExistStu(num):
-            StatusTable = SQL.select('select * from students where Num = \'%s\'' % num)
-            ScoreTable = SQL.select('select * from score where Snum = \'%s\'' % num)
-            Sum = 0.0
-            for item in ScoreTable:
-                Sum += item['score']
-            if len(ScoreTable) == 0:
-                avg = 0
+        if request.form['via'] == 'num':
+            num = 'stu' + request.form['num']
+            if user.isExistStu(num):
+                StatusTable = SQL.select('select * from students where Num = \'%s\'' % num)
+                STable = SQL.select('select * from score where Snum = \'%s\'' % num)
+                Sum = 0.0
+                for item in STable:
+                    Sum += item['score']
+                if len(STable) == 0:
+                    avg = 0
+                else:
+                    avg = Sum / len(STable)
+                ScoreTable = [STable]
+                avgs = {num: avg}
+                return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
             else:
-                avg = Sum / len(ScoreTable)
-            return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avg=avg)
-        else:
-            return render_template('statusSelect.html', fail='找不到学生')
+                return render_template('statusSelect.html', fail='找不到学生')
+        elif request.form['via'] == 'nam':
+            try:
+                nam = request.form['nam']
+                StatusTable = SQL.select('select * from students where Name = \'%s\'' % nam)
+                ScoreTable = []
+                avgs = {}
+                for i in StatusTable:
+                    STable = SQL.select(
+                        'select * from score where Snum = \'%s\'' % i['Num'])
+                    ScoreTable.append(STable)
+                    Sum = 0.0
+                    for item in STable:
+                        Sum += item['score']
+                        if len(ScoreTable) == 0:
+                            avg = 0
+                        else:
+                            avg = Sum / len(STable)
+                        avgs[i['Num']] = avg
+                return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
+            except:
+                return render_template('statusSelect.html', fail='找不到学生')
+        elif request.form['via'] == 'cla':
+            try:
+                gra = int(request.form['gra'])
+                dep = request.form['dep']
+                cla = int(request.form['cla'])
+                StatusTable = SQL.select(
+                    'select * from students where Grade = \'%d\' and Class = \'%d\' and Dept = \'%s\'' % (
+                        gra, cla, dep))
+                ScoreTable = []
+                avgs = {}
+                for i in StatusTable:
+                    STable = SQL.select(
+                        'select * from score where Snum = \'%s\'' % i['Num'])
+                    ScoreTable.append(STable)
+                    Sum = 0.0
+                    for item in STable:
+                        Sum += item['score']
+                        if len(ScoreTable) == 0:
+                            avg = 0
+                        else:
+                            avg = Sum / len(STable)
+                        avgs[i['Num']] = avg
+                return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
+            except:
+                return render_template('statusSelect.html', fail='找不到学生')
 
 
 @app.route('/alterself', methods=['GET', 'POST'])
@@ -542,5 +590,3 @@ def mycourse():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-    # server = make_server(host='0.0.0.0', port=80, app=app)  # 使用WSGI服务器
-    # server.serve_forever()  # 服务器启动 永久

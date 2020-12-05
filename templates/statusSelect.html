@@ -14,20 +14,78 @@
     <div class="row justify-content-center" style="height:500px">
         <div class="align-self-center" style="text-align:center;">
             <h2>学生查询</h2>
-            <form action="/statusSelect" method="post">
+            <select id="via" class="form-control">
+                <option>学号</option>
+                <option>姓名</option>
+                <option>班级</option>
+            </select>
+            <form action="/statusSelect" method="post" id="num">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">stu</span>
                     </div>
                     <input type="number" class="form-control" placeholder="学号" name="num" required>
                 </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">查询</button>
-                    <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="via" value="num">查询</button>
                 <br/>
                 {{fail}}
             </form>
+            <form action="/statusSelect" method="post" id="nam" style="display:none">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">姓名</span>
+                    </div>
+                    <input class="form-control" placeholder="姓名" name="nam" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="via" value="nam">查询</button>
+                <br/>
+                {{fail}}
+            </form>
+            <form action="/statusSelect" method="post" id="cla" style="display:none">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">年级</span>
+                    </div>
+                    <input type="number" class="form-control" placeholder="年级" name="gra" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">系</span>
+                    </div>
+                    <input class="form-control" placeholder="系" name="dep" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">班级</span>
+                    </div>
+                    <input type="number" class="form-control" placeholder="班级" name="cla" required>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="via" value="cla">查询</button>
+                <br/>
+                {{fail}}
+            </form>
+            <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
         </div>
     </div>
 </div>
+<script>
+    $("#via").change(function(){
+        if($("#via").val() == "学号"){
+            $("#num").show();
+            $("#nam").hide();
+            $("#cla").hide();
+        }else if($("#via").val() == "姓名"){
+            $("#num").hide();
+            $("#nam").show();
+            $("#cla").hide();
+        }else if($("#via").val() == "班级"){
+            $("#num").hide();
+            $("#nam").hide();
+            $("#cla").show();
+        }
+    })
+
+</script>
 </body>
 </html>

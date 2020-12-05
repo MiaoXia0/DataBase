@@ -16,11 +16,11 @@ def login():
                                charset='utf8',
                                as_dict=True)
     except:
-        return False
+        print("SQL Connection Failed!")
     else:
         global cur
         cur = conn.cursor()
-        return True
+        print("SQL Connection Succeed!")
 
 
 def select(sqlStr):
