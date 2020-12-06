@@ -28,10 +28,24 @@ def load_user(user_id):
 @app.route('/')
 def index():
     if not current_user.is_anonymous:
+        table = []
+
+        if user.gettype(current_user.id) == 'student':
+            table = SQL.select('''select * 
+                from students 
+                where account = '%s'
+                ''' % current_user.id)
+        elif user.gettype(current_user.id) == 'teacher':
+            table = SQL.select('''select * 
+                        from teachers 
+                        where account = '%s'
+                        ''' % current_user.id)
         return render_template('index.html',
                                login=1,
                                username=current_user.id,
-                               type=user.gettype(current_user.id))
+                               type=user.gettype(current_user.id),
+                               StatusTable=table,
+                               typ=user.gettype(current_user.id))
     else:
         return render_template('index.html', login=0, username='', type='')
 
@@ -152,7 +166,7 @@ def statusSelectP():
                     avg = Sum / len(STable)
                 ScoreTable = [STable]
                 avgs = {num: avg}
-                return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
+                return render_template('statusscore.html', currtype='teacher', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
             else:
                 return render_template('statusSelect.html', fail='找不到学生')
         elif request.form['via'] == 'nam':
@@ -173,7 +187,7 @@ def statusSelectP():
                         else:
                             avg = Sum / len(STable)
                         avgs[i['Num']] = avg
-                return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
+                return render_template('statusscore.html', currtype='teacher', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
             except:
                 return render_template('statusSelect.html', fail='找不到学生')
         elif request.form['via'] == 'cla':
@@ -198,7 +212,7 @@ def statusSelectP():
                         else:
                             avg = Sum / len(STable)
                         avgs[i['Num']] = avg
-                return render_template('statusscore.html', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
+                return render_template('statusscore.html', currtype='teacher', StatusTable=StatusTable, ScoreTable=ScoreTable, avgs=avgs)
             except:
                 return render_template('statusSelect.html', fail='找不到学生')
 
@@ -207,7 +221,7 @@ def statusSelectP():
 @login_required
 def alterself():
     if request.method == 'GET':
-        return render_template('alterone.html', username=current_user.id, type=user.gettype(current_user.id),
+        return render_template('alterone.html', currtype='student', username=current_user.id, type=user.gettype(current_user.id),
                                num=user.getnum(current_user.id),
                                name=user.getname(current_user.id),
                                sex=user.getsex(current_user.id), grade=user.getgrade(current_user.id),
@@ -247,6 +261,7 @@ def alternum():
 def alter():
     usr = ''
     num = request.form['num']
+    currtype=current_user.type
     if num[:3] == 'stu' and user.isExistStu(num):
         usr = SQL.select('select account from students where Num=\'%s\'' % num)[0]['account']
     elif num[:3] == 'tch' and user.isExistTch(num):
@@ -262,7 +277,7 @@ def alter():
                                name=user.getname(usr),
                                sex=user.getsex(usr), grade=user.getgrade(usr), classs=user.getclass(usr),
                                age=user.getage(usr),
-                               dept=user.getdept(usr))
+                               dept=user.getdept(usr), currtype=currtype)
 
 
 @app.route('/deletenum', methods=['GET'])

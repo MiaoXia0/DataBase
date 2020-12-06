@@ -8,8 +8,129 @@
     <script src="static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>学生信息管理系统 - 学生查询</title>
+    <style>
+        .side-nav-item {
+        display: block;
+        padding: 10px 15px 10px 15px;
+        background-color: #FFFFFF;
+        cursor: pointer;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .item-title {
+        background-color: #F5F5F5;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom: 1px solid #DDDDDD;
+        }
+
+        .panel-heading {
+        margin-top: 5px;
+        padding: 0;
+        border-radius: 3px;
+        border: 1px solid transparent;
+        border-color: #DDDDDD;
+        }
+
+        .item-body {
+        padding: 10px 15px 5px 15px;
+        border-bottom: 1px solid #DDDDDD;
+        }
+
+        .item-second {
+        margin-top: 5px;
+        cursor: pointer;
+        }
+
+        .item-second a {
+        display: block;
+        height: 100%;
+        width: 100%;
+        }
+        .at{ color:red;}
+
+
+
+    </style>
 </head>
-<body>
+<body style="text-align:center;">
+<div style="position:fixed; top:0px; width:100%; font-size:60px; background-color:rgba(0, 0, 255, 0.1);">
+    学生信息管理系统
+</div>
+<div class="col-md-2 side-nav">
+    <div class="panel-group" id="accordion">
+        <div class="panel-heading panel">
+            <a href="/" class="side-nav-item item-title">
+                首页
+            </a>
+            <div class="item-body collapse" id='index'>
+            </div>
+        </div>
+
+        <div class="panel-heading panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#item-xinxi" id="headxinxi"
+               class="side-nav-item item-title collapsed">
+                信息管理
+            </a>
+            <div id="item-xinxi" class="panel-collapse collapse show">
+                <div class="item-body">
+                    <ul class="list-unstyled">
+
+                        <li class="item-second"><a href="status">个人信息</a></li>
+                        {% if currtype == 'student' %}
+                        <li class="item-second"><a href="alterself">修改个人信息</a></li>
+                        {% elif currtype =='teacher' %}
+                        <li class="item-second"><a href="statusSelect">学生查询</a></li>
+                        <li class="item-second"><a href="alter">修改信息</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-heading panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#item-xuanke" id="headxuanke"
+               class="side-nav-item item-title">
+                选课管理
+            </a>
+            <div id="item-xuanke" class="panel-collapse collapse">
+                <div class="item-body">
+                    <ul class="list-unstyled">
+                        {% if currtype == 'student' %}
+                        <li class="item-second"><a href="course">选课</a></li>
+                        <li class="item-second"><a href="courses">已选课程</a></li>
+                        {% elif currtype == 'teacher' %}
+                        <li class="item-second"><a href="courseset">教师开课</a></li>
+                        <li class="item-second"><a href="mycourse">我开的课</a></li>
+                        <li class="item-second"><a href="add">录入成绩</a></li>
+                        <li class="item-second"><a href="deletenum">删除成绩</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-heading panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#item-qingjia" id="headqingjiw"
+               class="side-nav-item item-title collapsed">
+                请假管理
+            </a>
+            <div id="item-qingjia" class="panel-collapse collapse">
+                <div class="item-body">
+                    <ul class="list-unstyled">
+                        {% if currtype == 'student' %}
+                        <li class="item-second"><a href="leave">请假申请</a></li>
+                        <li class="item-second"><a href="currleave">我的请假</a></li>
+                        {% elif currtype == 'teacher' %}
+                        <li class="item-second"><a href="leavemanage">请假处理</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row justify-content-center" style="height:600px">
         <div class="align-self-center" style="text-align:center;">
@@ -88,6 +209,14 @@
             $("." + $(this).val()).hide();
         })
         $("." + $("#no").val()).show();
+    })
+    $(document).ready(function(){
+    var path=window.location.pathname;  //先得到地址栏内容
+    var regExp=/[\/\.\?]+/;
+    str=path.split(regExp);
+    var node=str.slice(-2,-1);   //截取地址栏信息得到文件名
+    $('#'+node+' a').addClass('at');  //提前写好对应的id,菜单加亮
+    $('#'+node).parent().parent().parent().addClass('in'); //id父级的父级的父级添加展开class
     })
 </script>
 </body>
