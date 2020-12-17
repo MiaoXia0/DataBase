@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>学生信息管理系统 - 开课</title>
+    <title>学生信息管理系统 - 教师开课</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/body.css">
     <script src="/static/js/jquery-3.5.1.min.js"></script>
@@ -89,6 +89,7 @@
             <div id="item-xuanke" class="panel-collapse collapse show">
                 <div class="item-body">
                     <ul class="list-unstyled">
+                        <li class="item-second"><a href="coursenew">添加课程</a></li>
                         <li class="item-second"><a href="courseset">教师开课</a></li>
                         <li class="item-second"><a href="mycourse">我开的课</a></li>
                         <li class="item-second"><a href="add">录入成绩</a></li>
@@ -119,18 +120,19 @@
             <form action="courseset" method="post">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">课程编号</div>
+                        <div class="input-group-text">课程</div>
                     </div>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">cour</div>
-                    </div>
-                    <input class="form-control" type="text" value="{{Cnum}}" readonly>
+                    <select name="Cnum" class="form-control">
+                        {% for i in CTable %}
+                        <option value="{{i['num']}}">{{i['num']}} - {{i['name']}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">课程名</div>
+                        <div class="input-group-text">课序号</div>
                     </div>
-                    <input class="form-control" type="text" maxlength="24" name="name">
+                    <input class="form-control" type="text" maxlength="24" name="Lnum">
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg btn-block">开课</button>
                 <a href="/" role="button" class="btn btn-primary btn-lg btn-block">返回首页</a>

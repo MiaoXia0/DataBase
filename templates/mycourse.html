@@ -89,6 +89,7 @@
             <div id="item-xuanke" class="panel-collapse collapse show">
                 <div class="item-body">
                     <ul class="list-unstyled">
+                        <li class="item-second"><a href="coursenew">添加课程</a></li>
                         <li class="item-second"><a href="courseset">教师开课</a></li>
                         <li class="item-second"><a href="mycourse">我开的课</a></li>
                         <li class="item-second"><a href="add">录入成绩</a></li>
@@ -120,11 +121,13 @@
                 <tr>
                     <th>课程号</th>
                     <th>课程名</th>
+                    <th>课序号</th>
                 </tr>
                 {% for item in ct %}
                 <tr>
-                    <td>{{item['num']}}</td>
-                    <td>{{item['name']}}</td>
+                    <td>{{item['Cnum']}}</td>
+                    <td>{{item['Cname']}}</td>
+                    <td>{{item['Lnum']}}</td>
                 </tr>
                 {% endfor %}
             </table>

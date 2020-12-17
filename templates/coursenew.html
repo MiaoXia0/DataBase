@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>学生信息管理系统 - 添加课程</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/body.css">
     <script src="/static/js/jquery-3.5.1.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>学生信息管理系统 - 信息查询</title>
     <style>
         .side-nav-item {
         display: block;
@@ -50,12 +50,9 @@
         }
         .at{ color:red;}
 
-
-
-
     </style>
 </head>
-<body style="text-align:center">
+<body class="text-center">
 <div style="position:fixed; top:0px; width:100%; font-size:60px; background-color:rgba(0, 0, 255, 0.1);">
     学生信息管理系统
 </div>
@@ -74,11 +71,9 @@
                class="side-nav-item item-title collapsed">
                 信息管理
             </a>
-            <div id="item-xinxi" class="panel-collapse collapse show">
+            <div id="item-xinxi" class="panel-collapse collapse">
                 <div class="item-body">
                     <ul class="list-unstyled">
-
-                        <li class="item-second"><a href="status">个人信息</a></li>
                         <li class="item-second"><a href="statusSelect">学生查询</a></li>
                         <li class="item-second"><a href="alter">修改信息</a></li>
                     </ul>
@@ -91,7 +86,7 @@
                class="side-nav-item item-title">
                 选课管理
             </a>
-            <div id="item-xuanke" class="panel-collapse collapse">
+            <div id="item-xuanke" class="panel-collapse collapse show">
                 <div class="item-body">
                     <ul class="list-unstyled">
                         <li class="item-second"><a href="coursenew">添加课程</a></li>
@@ -120,88 +115,40 @@
     </div>
 </div>
 <div class="container">
-    <div class="row justify-content-center" style="height:500px">
+    <div class="row justify-content-center" style="height:500px;">
         <div class="align-self-center" style="text-align:center;">
-            <h2>学生查询</h2>
-            <select id="via" class="form-control">
-                <option>学号</option>
-                <option>姓名</option>
-                <option>班级</option>
-            </select>
-            <form action="/statusSelect" method="post" id="num">
+            <form action="coursenew" method="post">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">stu</span>
+                        <div class="input-group-text">课程编号</div>
                     </div>
-                    <input type="number" class="form-control" placeholder="学号" name="num" required>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">cour</div>
+                    </div>
+                    <input class="form-control" type="text" value="{{Cnum}}" readonly>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" name="via" value="num">查询</button>
-                <br/>
-                {{fail}}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">课程名</div>
+                    </div>
+                    <input class="form-control" type="text" maxlength="24" name="name" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">开课</button>
+                <a href="/" role="button" class="btn btn-primary btn-lg btn-block">返回首页</a>
             </form>
-            <form action="/statusSelect" method="post" id="nam" style="display:none">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">姓名</span>
-                    </div>
-                    <input class="form-control" placeholder="姓名" name="nam" required>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" name="via" value="nam">查询</button>
-                <br/>
-                {{fail}}
-            </form>
-            <form action="/statusSelect" method="post" id="cla" style="display:none">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">年级</span>
-                    </div>
-                    <input type="number" class="form-control" placeholder="年级" name="gra" required>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">系</span>
-                    </div>
-                    <input class="form-control" placeholder="系" name="dep" required>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">班级</span>
-                    </div>
-                    <input type="number" class="form-control" placeholder="班级" name="cla" required>
-                </div>
-
-                <button class="btn btn-lg btn-primary btn-block" type="submit" name="via" value="cla">查询</button>
-                <br/>
-                {{fail}}
-            </form>
-            <a href="/" role="button" class="btn btn-lg btn-primary btn-block">返回首页</a>
+            {{message}}
         </div>
     </div>
 </div>
 <script>
-    $("#via").change(function(){
-        if($("#via").val() == "学号"){
-            $("#num").show();
-            $("#nam").hide();
-            $("#cla").hide();
-        }else if($("#via").val() == "姓名"){
-            $("#num").hide();
-            $("#nam").show();
-            $("#cla").hide();
-        }else if($("#via").val() == "班级"){
-            $("#num").hide();
-            $("#nam").hide();
-            $("#cla").show();
-        }
-    })
-    $(document).ready(function(){
-    var path=window.location.pathname;  //先得到地址栏内容
-    var regExp=/[\/\.\?]+/;
-    str=path.split(regExp);
-    var node=str.slice(-2,-1);   //截取地址栏信息得到文件名
-    $('#'+node+' a').addClass('at');  //提前写好对应的id,菜单加亮
-    $('#'+node).parent().parent().parent().addClass('in'); //id父级的父级的父级添加展开class
-    })
+$(document).ready(function(){
+var path=window.location.pathname;  //先得到地址栏内容
+var regExp=/[\/\.\?]+/;
+str=path.split(regExp);
+var node=str.slice(-2,-1);   //截取地址栏信息得到文件名
+$('#'+node+' a').addClass('at');  //提前写好对应的id,菜单加亮
+$('#'+node).parent().parent().parent().addClass('in'); //id父级的父级的父级添加展开class
+})
 
 </script>
 </body>

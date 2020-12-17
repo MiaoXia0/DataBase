@@ -92,6 +92,7 @@
                     <ul class="list-unstyled">
                         <li class="item-second"><a href="course">选课</a></li>
                         <li class="item-second"><a href="courses">已选课程</a></li>
+                        <li class="item-second"><a href="score">成绩查询</a></li>
                     </ul>
                 </div>
             </div>
@@ -121,12 +122,14 @@
                 <tr>
                     <th>课程号</th>
                     <th>课程名</th>
+                    <th>课序号</th>
                     <th>年级</th>
                 </tr>
                 {% for item in myct %}
                 <tr>
                     <td>{{item['Cnum']}}</td>
                     <td>{{item['Cname']}}</td>
+                    <td>{{item['Lnum']}}</td>
                     <td>{{item['grade']}}</td>
                 </tr>
                 {% endfor %}
@@ -136,17 +139,21 @@
                 <tr>
                     <th>课程号</th>
                     <th>课程名</th>
+                    <th>课序号</th>
                     <th>开课教师</th>
                     <th>操作</th>
                 </tr>
                 {% for i in ct %}
                 <tr>
-                    <td>{{i['num']}}</td>
-                    <td>{{i['name']}}</td>
+                    <td>{{i['Cnum']}}</td>
+
+                    <td>{{i['Cname']}}</td>
+                    <td>{{i['Lnum']}}</td>
                     <td>{{i['Tname']}}</td>
                     <form action="/course" method="post">
                         <td>
-                            <button type="submit" class="btn btn-sm btn-primary" name="Cnum" value="{{i['num']}}">
+                            <input type="hidden" name="Lnum" value="{{i['Lnum']}}">
+                            <button type="submit" class="btn btn-sm btn-primary" name="Cnum" value="{{i['Cnum']}}">
                                 选课/退课
                             </button>
                         </td>

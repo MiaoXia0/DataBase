@@ -89,6 +89,7 @@
             <div id="item-xuanke" class="panel-collapse collapse show">
                 <div class="item-body">
                     <ul class="list-unstyled">
+                        <li class="item-second"><a href="coursenew">添加课程</a></li>
                         <li class="item-second"><a href="courseset">教师开课</a></li>
                         <li class="item-second"><a href="mycourse">我开的课</a></li>
                         <li class="item-second"><a href="add">录入成绩</a></li>
@@ -155,7 +156,8 @@
                 <thead>
                 <tr>
                     <th>课程名</th>
-                    <th>教师</th>
+                    <th>课程号</th>
+                    <th>课序号</th>
                     <th>成绩</th>
                     <th>学年</th>
                 </tr>
@@ -164,7 +166,8 @@
                 {% for item in scores %}
                 <tr>
                     <td>{{item['course']}}</td>
-                    <td>{{item['Tnum']}}</td>
+                    <td>{{item['Cnum']}}</td>
+                    <td>{{item['Lnum']}}</td>
                     <td>{{item['score']}}</td>
                     <td>{{item['grade']}}</td>
                 </tr>
@@ -172,12 +175,13 @@
                 </tbody>
             </table>
             <form action="/deleteone" method="post">
-                <select class="form-control" name="Cname">
+                <select class="form-control" name="Cnum">
                     {% for item in scores %}
-                    <option value="{{item['course']}}">{{item['course']}}</option>
+                    <option value="{{item['Cnum']}}">{{item['Cnum']}}</option>
                     {% endfor %}
                 </select>
                 <input type="hidden" name="num" value="{{num}}">
+
                 <button class="btn btn-lg btn-primary btn-block" type="submit">删除选中</button>
             </form>
             <form action="/delete" method="post">

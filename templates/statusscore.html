@@ -100,7 +100,9 @@
                         {% if currtype == 'student' %}
                         <li class="item-second"><a href="course">选课</a></li>
                         <li class="item-second"><a href="courses">已选课程</a></li>
+                        <li class="item-second"><a href="score">成绩查询</a></li>
                         {% elif currtype == 'teacher' %}
+                        <li class="item-second"><a href="coursenew">添加课程</a></li>
                         <li class="item-second"><a href="courseset">教师开课</a></li>
                         <li class="item-second"><a href="mycourse">我开的课</a></li>
                         <li class="item-second"><a href="add">录入成绩</a></li>
@@ -179,14 +181,16 @@
             <table class="{{i[0]['Snum']}} table table-hover" style="display:none;">
                 <tr>
                     <th>课程名</th>
-                    <th>教师</th>
+                    <th>课程号</th>
+                    <th>课序号</th>
                     <th>成绩</th>
                     <th>学年</th>
                 </tr>
                 {% for item in i %}
                 <tr>
                     <td>{{item['course']}}</td>
-                    <td>{{item['Tnum']}}</td>
+                    <td>{{item['Cnum']}}</td>
+                    <td>{{item['Lnum']}}</td>
                     <td>{{item['score']}}</td>
                     <td>{{item['grade']}}</td>
                 </tr>

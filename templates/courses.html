@@ -92,6 +92,7 @@
                     <ul class="list-unstyled">
                         <li class="item-second"><a href="course">选课</a></li>
                         <li class="item-second"><a href="courses">已选课程</a></li>
+                        <li class="item-second"><a href="score">成绩查询</a></li>
                     </ul>
                 </div>
             </div>
@@ -120,12 +121,14 @@
                 <tr>
                     <th>课程号</th>
                     <th>课程名</th>
+                    <th>课序号</th>
                     <th>年级</th>
                 </tr>
                 {% for item in ct %}
                 <tr>
                     <td>{{item['Cnum']}}</td>
                     <td>{{item['Cname']}}</td>
+                    <td>{{item['Lnum']}}</td>
                     <td>{{item['grade']}}</td>
                 </tr>
                 {% endfor %}

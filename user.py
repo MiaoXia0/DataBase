@@ -190,16 +190,17 @@ def delstu(num: str):
     SQL.conn.commit()
 
 
-def delcourse(num: str, Cname: str):
+def delcourse(num: str, Cnum: str):
     try:
-        SQL.cur.execute('delete from score where course=\'%s\' and Snum=\'%s\'' % (Cname, num))
+        SQL.cur.execute('delete from score where Cnum=\'%s\' and Snum=\'%s\'' % (Cnum, num))
         SQL.conn.commit()
         return True
     except:
         return False
 
 
-def scorein(num: str, Tnum: str, Cname: str, score: int, grade: int):
-    SQL.cur.execute('insert into score (Snum, Tnum, course, score, grade) values (\'%s\', \'%s\', \'%s\', %d, %d)' % (
-        num, Tnum, Cname, score, grade))
+def scorein(num: str, Cname: str, score: int, grade: int, Cnum: str, Lnum: int):
+    SQL.cur.execute('''insert into score(Snum, course, score, grade, Cnum, Lnum)
+                        values ('%s', '%s', %d, %d, '%s', %d)
+                        ''' % (num, Cname, score, grade, Cnum, Lnum))
     SQL.conn.commit()
