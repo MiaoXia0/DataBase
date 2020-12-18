@@ -444,18 +444,6 @@ def score():
     return render_template('score.html', ScoreTable=st, avg=avg)
 
 
-@app.route('/test', methods=['GET'])
-@login_required
-def selectget():
-    if current_user.id == 'miaoxiao':
-        return 'accounts:' + DataFrame(SQL.select('select * from accounts')).to_html() + \
-               'students:' + DataFrame(SQL.select('select * from students')).to_html() + \
-               'teachers:' + DataFrame(SQL.select('select * from teachers')).to_html() + \
-               'score:' + DataFrame(SQL.select('select * from score')).to_html()
-    else:
-        return redirect('/')
-
-
 @app.route('/deleteone', methods=['POST'])
 @login_required
 def deleteone():
