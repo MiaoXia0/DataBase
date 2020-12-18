@@ -50,6 +50,7 @@
         }
         .at{ color:red;}
 
+
     </style>
 </head>
 <body class="text-center">
@@ -150,14 +151,14 @@
                     <td>{{i['Cname']}}</td>
                     <td>{{i['Lnum']}}</td>
                     <td>{{i['Tname']}}</td>
-                    <form action="/course" method="post">
-                        <td>
+                    <td>
+                        <form action="/course" method="post" style="padding:0;">
                             <input type="hidden" name="Lnum" value="{{i['Lnum']}}">
                             <button type="submit" class="btn btn-sm btn-primary" name="Cnum" value="{{i['Cnum']}}">
                                 选课/退课
                             </button>
-                        </td>
-                    </form>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
@@ -174,6 +175,7 @@ var node=str.slice(-2,-1);   //截取地址栏信息得到文件名
 $('#'+node+' a').addClass('at');  //提前写好对应的id,菜单加亮
 $('#'+node).parent().parent().parent().addClass('in'); //id父级的父级的父级添加展开class
 })
+
 
 </script>
 </body>

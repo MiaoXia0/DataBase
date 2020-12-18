@@ -123,6 +123,7 @@
                     <th>课程名</th>
                     <th>课序号</th>
                     <th>年级</th>
+                    <th>操作</th>
                 </tr>
                 {% for item in ct %}
                 <tr>
@@ -130,6 +131,13 @@
                     <td>{{item['Cname']}}</td>
                     <td>{{item['Lnum']}}</td>
                     <td>{{item['grade']}}</td>
+                    <td>
+                        <form action="courses" method="post" style="padding:0;">
+                            <input type="hidden" name="Cnum" value="{{item['Cnum']}}">
+                            <input type="hidden" name="Lnum" value="{{item['Lnum']}}">
+                            <button type="submit" class="btn btn-primary btn-sm">退课</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>

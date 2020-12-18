@@ -636,6 +636,23 @@ def courses():
     return render_template('courses.html', ct=ct)
 
 
+@app.route('/courses', methods=['POST'])
+@login_required
+def coursesdel():
+    Snum = user.getnum(current_user.id)
+    Cnum = request.form['Cnum']
+    Lnum = int(request.form['Lnum'])
+    SQL.cur.execute('''delete from cs
+    where Snum='%s' and Lnum='%d' and Cnum='%s' 
+    ''' % (Snum, Lnum, Cnum))
+    SQL.conn.commit()
+    ct = SQL.select('select * from cs where Snum=\'%s\'' % Snum)
+    for t in ct:
+        Cname = SQL.selectone('select name from courses where num=\'%s\'' % t['Cnum'])['name']
+        t['Cname'] = Cname
+    return render_template('courses.html', ct=ct)
+
+
 @app.route('/coursenew', methods=['GET'])
 @login_required
 def courseng():
@@ -690,6 +707,24 @@ def coursesetp():
 def mycourse():
     if user.gettype(current_user.id) == 'student':
         return render_template('return.html', message='学生不能开课')
+    Tnum = user.getnum(current_user.id)
+    ct = SQL.select('select * from ct where Tnum=\'%s\'' % Tnum)
+    for i in ct:
+        i['Cname'] = SQL.selectone('select name from courses where num=\'%s\'' % i['Cnum'])['name']
+    return render_template('mycourse.html', ct=ct)
+
+
+@app.route('/mycourse', methods=['POST'])
+@login_required
+def mycoursedel():
+    if user.gettype(current_user.id) == 'student':
+        return render_template('return.html', message='学生不能删课')
+    Cnum = request.form['Cnum']
+    Lnum = int(request.form['Lnum'])
+    SQL.cur.execute('''delete from ct
+        where Cnum='%s' and Lnum='%d'
+    ''' % (Cnum, Lnum))
+    SQL.conn.commit()
     Tnum = user.getnum(current_user.id)
     ct = SQL.select('select * from ct where Tnum=\'%s\'' % Tnum)
     for i in ct:
