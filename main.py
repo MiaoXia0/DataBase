@@ -1,8 +1,7 @@
 from datetime import *
 
-from flask import Flask, request, render_template, redirect
-from flask_login import login_user, logout_user, LoginManager, login_required, current_user, AnonymousUserMixin
-from pandas import DataFrame
+from flask import Flask, request, render_template
+from flask_login import login_user, logout_user, LoginManager, login_required, current_user
 import SQL
 import user
 from user import User
@@ -57,15 +56,15 @@ def log():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        next = request.form['next']
+        nxt = request.form['next']
         if user.verify(username, password):
             curr_user = User()
             curr_user.id = username
             curr_user.type = user.gettype(username)
             login_user(curr_user)
-            if next != '':
+            if nxt != '':
                 return render_template('loginsucceed.html',
-                                       username=username, usertype=current_user.type, next=next)
+                                       username=username, usertype=current_user.type, next=nxt)
             else:
                 return render_template('loginsucceed.html',
                                        username=username, usertype=current_user.type, next='/')
@@ -75,10 +74,10 @@ def log():
 
     elif request.method == 'GET':
         try:
-            next = request.args['next']
-        except:
-            next = ''
-        return render_template('login.html', next=next)
+            nxt = request.args['next']
+        except Exception:
+            nxt = ''
+        return render_template('login.html', next=nxt)
 
 
 @app.route('/register', methods=['GET'])
@@ -197,7 +196,7 @@ def statusSelectP():
                         avgs[i['Num']] = avg
                 return render_template('statusscore.html', currtype='teacher', StatusTable=StatusTable,
                                        ScoreTable=ScoreTable, avgs=avgs)
-            except:
+            except Exception:
                 return render_template('statusSelect.html', fail='找不到学生')
         elif request.form['via'] == 'cla':
             try:
@@ -223,7 +222,7 @@ def statusSelectP():
                         avgs[i['Num']] = avg
                 return render_template('statusscore.html', currtype='teacher', StatusTable=StatusTable,
                                        ScoreTable=ScoreTable, avgs=avgs)
-            except:
+            except Exception:
                 return render_template('statusSelect.html', fail='找不到学生')
 
 
@@ -248,7 +247,7 @@ def alterself():
         try:
             grade = int(request.form['grade'])
             classs = int(request.form['class'])
-        except:
+        except Exception:
             grade = 0
             classs = 0
         if usr != '':
@@ -378,6 +377,7 @@ def addp():
     if user.gettype(current_user.id) == 'student':
         return render_template('return.html', message='学生不能录入成绩！')
     else:
+        myct = []
         Tnum = user.getnum(current_user.id)
         Snum = request.form['Snum']
         ct = SQL.select(
@@ -536,12 +536,13 @@ def leavemanagep():
         return render_template('return.html', message='学生不能管理请假')
     Snum = request.form['Snum']
     Tnum = user.getnum(current_user.id)
+
     try:
         act = request.form['act']
-    except:
-        pass
-    status = request.form['status']
-    if status == '未批准':
+    except Exception:
+        act = ''
+    stats = request.form['status']
+    if stats == '未批准':
         if act == '准假':
             SQL.cur.execute(
                 'update leave set status=\'未销假\' where status=\'未批准\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
@@ -550,11 +551,12 @@ def leavemanagep():
             SQL.cur.execute(
                 'update leave set status=\'已驳回\' where status=\'未批准\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
             SQL.conn.commit()
-    elif status == '未销假':
+    elif stats == '未销假':
         SQL.cur.execute(
             'update leave set status=\'已销假\' where status=\'未销假\' and Tnum=\'%s\' and Snum=\'%s\'' % (Tnum, Snum))
         SQL.conn.commit()
     LeaveTable = SQL.select('select * from leave where Tnum = \'%s\'' % Tnum)
+    Sname = ''
     for table in LeaveTable:
         Sname = user.getname(user.getaccount(table['Snum']))
         table['Sname'] = Sname
